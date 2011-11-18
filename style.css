@@ -1,0 +1,13 @@
+body {
+    font-family: sans-serif;
+    padding: 0px;
+    margin: 0px;
+    background-color: black;
+    color: white;
+}
+
+a:link, a:visited, a:active, a:hover {
+    text-decoration: none;
+    color: white;
+}
+
