@@ -7,6 +7,42 @@
         <script src="controllers.js" type="text/javascript"></script>
     </head>
     <body ng:controller="FoosController">
+        <div>
+            <select name="left" ng:options="p.name for p in players" ng:change="right=''">
+                <option value="">Select</option>
+            </select>
+        </div>
+        <div>
+            <select name="right" ng:options="p.name for p in players.$filter(nameIsNotLeft)">
+                <option value="">Select</option>
+            </select>
+        </div>
+        <div ng:show="left">
+            <div>Games with {{left.name}}</div>
+            <div ng:repeat="game in gamesIncludingPlayer(left)">
+                {{game.meta.timestamp | date:'EEE dd-MM-yyyy HH:mm'}} - {{game.team1.defender}} &amp; {{game.team1.attacker}} {{game.team1.score}}-{{game.team2.score}} {{game.team2.defender}} &amp; {{game.team2.attacker}}
+            </div>
+        </div>
+        <div ng:show="right">
+            <div>Games with {{right.name}}</div>
+            <div ng:repeat="game in gamesIncludingPlayer(right)">
+                {{game.meta.timestamp | date:'EEE dd-MM-yyyy HH:mm'}} - {{game.team1.defender}} &amp; {{game.team1.attacker}} {{game.team1.score}}-{{game.team2.score}} {{game.team2.defender}} &amp; {{game.team2.attacker}}
+            </div>
+        </div>
+        <div ng:show="left && right">
+            <div ng:show="gamesIncludingPlayers(left, right).$count()">
+                <div>Games with both {{left.name}} and {{right.name}}</div>
+                <div ng:repeat="game in gamesIncludingPlayers(left, right)">
+                    {{game.meta.timestamp | date:'EEE dd-MM-yyyy HH:mm'}} - {{game.team1.defender}} &amp; {{game.team1.attacker}} {{game.team1.score}}-{{game.team2.score}} {{game.team2.defender}} &amp; {{game.team2.attacker}}
+                </div>
+            </div>
+            <div ng:show="gamesIncludingPlayersOnSameTeam(left, right).$count()">
+                <div>Games with {{left.name}} and {{right.name}} on the same team</div>
+                <div ng:repeat="game in gamesIncludingPlayersOnSameTeam(left, right)">
+                    {{game.meta.timestamp | date:'EEE dd-MM-yyyy HH:mm'}} - {{game.team1.defender}} &amp; {{game.team1.attacker}} {{game.team1.score}}-{{game.team2.score}} {{game.team2.defender}} &amp; {{game.team2.attacker}}
+                </div>
+            </div>
+        </div>
     </body>
 </html>
 
