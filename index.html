@@ -8,38 +8,51 @@
     </head>
     <body ng:controller="FoosController">
         <div>
-            <select name="left" ng:options="p.name for p in players" ng:change="right=''">
-                <option value="">Select</option>
-            </select>
-        </div>
-        <div>
-            <select name="right" ng:options="p.name for p in players.$filter(nameIsNotLeft)">
+            <select class="player left" name="left" ng:options="p.name for p in players" ng:change="right=''">
                 <option value="">Select</option>
             </select>
         </div>
         <div ng:show="left">
-            <div>Games with {{left.name}}</div>
-            <div ng:repeat="game in gamesIncludingPlayer(left)">
-                {{game.meta.timestamp | date:'EEE dd-MM-yyyy HH:mm'}} - {{game.team1.defender}} &amp; {{game.team1.attacker}} {{game.team1.score}}-{{game.team2.score}} {{game.team2.defender}} &amp; {{game.team2.attacker}}
+            <div>
+                <select class="position" name="leftPosition">
+                    <option value="all">All</option>
+                    <option value="defender">Defender</option>
+                    <option value="attacker">Attacker</option>
+                </select>
             </div>
-        </div>
-        <div ng:show="right">
-            <div>Games with {{right.name}}</div>
-            <div ng:repeat="game in gamesIncludingPlayer(right)">
-                {{game.meta.timestamp | date:'EEE dd-MM-yyyy HH:mm'}} - {{game.team1.defender}} &amp; {{game.team1.attacker}} {{game.team1.score}}-{{game.team2.score}} {{game.team2.defender}} &amp; {{game.team2.attacker}}
-            </div>
-        </div>
-        <div ng:show="left && right">
-            <div ng:show="gamesIncludingPlayers(left, right).$count()">
-                <div>Games with both {{left.name}} and {{right.name}}</div>
-                <div ng:repeat="game in gamesIncludingPlayers(left, right)">
-                    {{game.meta.timestamp | date:'EEE dd-MM-yyyy HH:mm'}} - {{game.team1.defender}} &amp; {{game.team1.attacker}} {{game.team1.score}}-{{game.team2.score}} {{game.team2.defender}} &amp; {{game.team2.attacker}}
+            <div class="info">
+                <div class="wins infoBox half">
+                    <div>{{left.wins[leftPosition]}}</div>
+                    <div class="description">WINS</div>
                 </div>
-            </div>
-            <div ng:show="gamesIncludingPlayersOnSameTeam(left, right).$count()">
-                <div>Games with {{left.name}} and {{right.name}} on the same team</div>
-                <div ng:repeat="game in gamesIncludingPlayersOnSameTeam(left, right)">
-                    {{game.meta.timestamp | date:'EEE dd-MM-yyyy HH:mm'}} - {{game.team1.defender}} &amp; {{game.team1.attacker}} {{game.team1.score}}-{{game.team2.score}} {{game.team2.defender}} &amp; {{game.team2.attacker}}
+                <div class="losses infoBox half">
+                    <div>{{left.losses[leftPosition]}}</div>
+                    <div class="description">LOSSES</div>
+                </div>
+                <div class="clear"></div>
+                <div class="winRate infoBox half">
+                    <div>{{left.winRate()[leftPosition] | number:0}}%</div>
+                    <div class="description">WIN RATE</div>
+                </div>
+                <div class="streak infoBox half">
+                    <div>{{left.streak()[leftPosition]}}</div>
+                    <div class="description">STREAK</div>
+                </div>
+                <div class="clear"></div>
+                <div class="scored infoBox half">
+                    <div>{{left.goals[leftPosition]}}</div>
+                    <div class="description">SCORED</div>
+                </div>
+                <div class="conceded infoBox half">
+                    <div>{{left.conceded[leftPosition]}}</div>
+                    <div class="description">CONCEDED</div>
+                </div>
+                <div class="clear"></div>
+                <div class="form infoBox full">
+                    <div>
+                        <span class="{{s}}" ng:show="s" ng:repeat="s in left.sequence[leftPosition].$limitTo(-5)">{{s}}</span>
+                    </div>
+                    <div class="description">FORM</div>
                 </div>
             </div>
         </div>

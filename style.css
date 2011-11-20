@@ -11,3 +11,72 @@ a:link, a:visited, a:active, a:hover {
     color: white;
 }
 
+select.player {
+    -webkit-appearance: button;
+    -webkit-border-radius: 10px;
+    font-size: 2em;
+    padding: 0.5em;
+    outline: none;
+    width: 300px;
+    color: black;
+}
+
+select.left, select.left option {
+    background-color: #090;
+}
+
+select.right, select.right option {
+    background-color: #900;
+}
+
+select.position {
+    -webkit-appearance: button;
+    -webkit-border-radius: 10px;
+    font-size: 1em;
+    padding: 0.5em;
+    outline: none;
+    width: 300px;
+    color: black;
+}
+
+.info {
+    background-color: white;
+    color: black;
+    font-size: 2em;
+    font-weight: bold;
+    text-align: center;
+    width: 300px;
+    -webkit-border-radius: 10px;
+}
+
+.infoBox {
+    padding: 0.5em 0em;
+}
+
+.infoBox .description {
+    font-size: 0.5em;
+}
+
+.full {
+}
+
+.half {
+    width: 150px;
+}
+
+.wins, .losses, .winRate, .streak, .scored, .conceded {
+    float: left;
+}
+
+.clear {
+    clear: both;
+}
+
+.form .W {
+    color: #090;
+}
+
+.form .L {
+    color: #900;
+}
+
